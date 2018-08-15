@@ -97,8 +97,12 @@ test('can create loan application', async t => {
   //     }
   //   }
   // }
-  //await loanApplication.save();
-  t.pass();
+  try {
+    await loanApplication.save();
+    t.pass();
+  } catch(e) {
+    t.is(JSON.parse(e.message).status, 400);
+  }
 });
 
 test('can read loan', async t => {
@@ -113,4 +117,112 @@ test('can read loan with options', async t => {
   await loan.read({fields: ['clientId']});
   t.is(loan.get('clientId'), 8);
   t.is(loan.get('accountNo'), undefined);
+});
+
+test('can approve loan', async t => {
+  const loan = new LoanModel(1);
+  const approveData = {
+    "locale": "en",
+    "dateFormat": "dd MMMM yyyy",
+    "approvedOnDate": "20 September 2011",
+    "expectedDisbursementDate" : "20 September 2011",
+    "note": "Loan approval note",
+    "disbursementData" : [{ id:226, principal:"5", expectedDisbursementDate:"20 September 2011"},
+      { id:227, principal:"91", expectedDisbursementDate:"21 September 2011"}],
+  };
+  // {
+  //   "status": 400,
+  //   "json": {
+  //   "developerMessage": "The request was invalid. This typically will happen due to validation errors which are
+  // provided.",
+  //     "httpStatusCode": "400",
+  //     "defaultUserMessage": "Validation errors exist.",
+  //     "userMessageGlobalisationCode": "validation.msg.validation.errors.exist",
+  //     "errors": [{
+  //     "developerMessage": "Loan Account Approval is not allowed. Loan Account is not in submitted and pending
+  // approval state.",
+  //     "defaultUserMessage": "Loan Account Approval is not allowed. Loan Account is not in submitted and pending
+  // approval state.",
+  //     "userMessageGlobalisationCode": "error.msg.loan.approve.account.is.not.submitted.and.pending.state",
+  //     "parameterName": "id",
+  //     "value": null,
+  //     "args": []
+  //   }]
+  // }
+  // }
+  try {
+    const reply = await loan.approve(approveData);
+    t.pass();
+  } catch(e) {
+    t.is(JSON.parse(e.message).status, 400);
+  }
+});
+
+test('can reject loan', async t => {
+  const loan = new LoanModel(1);
+  const rejectData = {
+    "locale": "en",
+    "dateFormat": "dd MMMM yyyy",
+    "rejectedOnDate": "20 September 2011",
+    "note": "Loan rejection reason.",
+  };
+  // {
+  //   "status": 400,
+  //   "json": {
+  //   "developerMessage": "The request was invalid. This typically will happen due to validation errors which
+  // are provided.",
+  //     "httpStatusCode": "400",
+  //     "defaultUserMessage": "Validation errors exist.",
+  //     "userMessageGlobalisationCode": "validation.msg.validation.errors.exist",
+  //     "errors": [{
+  //     "developerMessage": "Loan application cannot be rejected. Loan Account is not in Submitted and
+  // Pending approval state.",
+  //     "defaultUserMessage": "Loan application cannot be rejected. Loan Account is not in Submitted and
+  // Pending approval state.",
+  //     "userMessageGlobalisationCode": "error.msg.loan.reject.account.is.not.submitted.pending.approval.state",
+  //     "parameterName": "id",
+  //     "value": null,
+  //     "args": []
+  //   }]
+  // }
+  // }
+  try {
+    const reply = await loan.reject(rejectData);
+    t.pass();
+  } catch(e) {
+    t.is(JSON.parse(e.message).status, 400);
+  }
+});
+
+test('can withdrawn loan', async t => {
+  const loan = new LoanModel(1);
+  const withdrawnData = {
+    "locale": "en",
+    "dateFormat": "dd MMMM yyyy",
+    "withdrawnOnDate": "20 September 2011",
+    "note": "Reason loan applicant withdrew from application.",
+  };
+  // {
+  //   "status": 403,
+  //   "json": {
+  //   "developerMessage": "Request was understood but caused a domain rule violation.",
+  //     "httpStatusCode": "403",
+  //     "defaultUserMessage": "Errors contain reason for domain rule violation.",
+  //     "userMessageGlobalisationCode": "validation.msg.domain.rule.violation",
+  //     "errors": [{
+  //     "developerMessage": "Only the loan applications with status 'Submitted and pending approval' are allowed to be withdrawn by applicant.",
+  //     "defaultUserMessage": "Only the loan applications with status 'Submitted and pending approval' are allowed to be withdrawn by applicant.",
+  //     "userMessageGlobalisationCode": "error.msg.loan.withdraw.cannot.withdraw",
+  //     "parameterName": "id",
+  //     "value": null,
+  //     "args": []
+  //   }]
+  // }
+  // }
+  try {
+    const reply = await loan.withdrawn(withdrawnData);
+    t.pass();
+  } catch(e) {
+    t.is(JSON.parse(e.message).status, 403);
+  }
 });

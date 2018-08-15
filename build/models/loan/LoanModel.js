@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var Aparector_1 = require("../../Aparector");
 var Model_1 = require("../../Model");
 var LoanModel = /** @class */ (function (_super) {
     __extends(LoanModel, _super);
@@ -39,8 +40,20 @@ var LoanModel = /** @class */ (function (_super) {
             "loanType",
         ];
         return _this;
-        // TODO implement additional loan model specific validations
     }
+    // TODO implement additional loan model specific validations
+    // TODO specify format for approveData
+    LoanModel.prototype.approve = function (approveData) {
+        return Aparector_1.default.instance.post(this.type + "/" + this.id + "?command=approve", approveData);
+    };
+    // TODO specify format for rejectData
+    LoanModel.prototype.reject = function (rejectData) {
+        return Aparector_1.default.instance.post(this.type + "/" + this.id + "?command=reject", rejectData);
+    };
+    // TODO specify format for withdrawnData
+    LoanModel.prototype.withdrawn = function (withdrawnData) {
+        return Aparector_1.default.instance.post(this.type + "/" + this.id + "?command=withdrawnByApplicant", withdrawnData);
+    };
     return LoanModel;
 }(Model_1.default));
 exports.default = LoanModel;
