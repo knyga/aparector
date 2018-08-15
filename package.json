@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fetch": "^1.1.0"
+    "fetch": "^1.1.0",
+    "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",

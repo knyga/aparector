@@ -1,0 +1,5 @@
+{
+  "endpoint": "https://demo.openmf.org/fineract-provider/api/v1/",
+  "username": "mifos",
+  "password": "password"
+}
