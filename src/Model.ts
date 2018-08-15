@@ -1,11 +1,16 @@
 import * as _ from "lodash";
+import * as queryString from "query-string";
 import Aparector from "./Aparector";
-export default abstract class Model {
+export default class Model {
+    // Note: type and requiredFields could be static, but it would make it harder to access them within parent
     public type: string;
-    public data: any = {};
     public requiredFields: string[] = [];
-    public optionalFields: string[] = [];
-    public isValid(): boolean {
+    public id: number;
+    public data: any = {};
+    public constructor(id?) {
+        this.id = id;
+    }
+    public checkIsValid(): boolean {
         for (const key of this.requiredFields) {
             if (_.isUndefined(this.data[key])) {
                 return false;
@@ -20,24 +25,16 @@ export default abstract class Model {
     public get(key: string): any {
         return this.data[key];
     }
-    // TODO add possibility to work with generic options (Restrict Returned Fields, Pretty JSON Formatting)
-    // TODO check if validation should be done before saving or if it should be parameterized
-    public save() {
+    public save(isShouldBeValid = true) {
+        if (isShouldBeValid && !this.checkIsValid()) {
+            throw new Error("Model is invalid");
+        }
+
         return Aparector.instance.post(this.type, this.data);
     }
-    // public push() {
-    //     return fetch(`${Authentication.endpoint}authentication?username=${username}&password=${password}`, {
-    //         headers: {
-    //             "Content-Type": "application/json; charset=utf-8",
-    //             "Fineract-Platform-TenantId": "default",
-    //         },
-    //         method: "POST",
-    //     }).then((res) => {
-    //         if (res.status === 200) {
-    //             return res.json();
-    //         } else {
-    //             throw new Error("Authorization failed");
-    //         }
-    //     }).then((info) => this.info = info);
-    // }
+    public read(options?: any) {
+        return Aparector.instance
+            .get(`${this.type}/${this.id}${_.isUndefined(options) ? "" : "?" + queryString.stringify(options) }`)
+            .then((data) => this.data = data);
+    }
 }

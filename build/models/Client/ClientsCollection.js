@@ -13,16 +13,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Model_1 = require("./Model");
-var ClientModel = /** @class */ (function (_super) {
-    __extends(ClientModel, _super);
-    function ClientModel() {
+var Collection_1 = require("../../Collection");
+var ClientsCollection = /** @class */ (function (_super) {
+    __extends(ClientsCollection, _super);
+    function ClientsCollection() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = "clients";
-        _this.requiredFields = ["officeId"];
+        _this.items = [];
         return _this;
-        // TODO implement additional client model specific validations
     }
-    return ClientModel;
-}(Model_1.default));
-exports.default = ClientModel;
+    return ClientsCollection;
+}(Collection_1.default));
+exports.default = ClientsCollection;

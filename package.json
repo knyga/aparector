@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava ./test/isolated-unit/Model.js",
+    "test": "ava",
     "dev": "nodemon",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
@@ -14,7 +14,8 @@
   "dependencies": {
     "fetch": "^1.1.0",
     "lodash": "^4.17.10",
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.2.0",
+    "query-string": "^6.1.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",

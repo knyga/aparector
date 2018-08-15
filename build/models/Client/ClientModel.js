@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Model_1 = require("./Model");
+var Model_1 = require("../../Model");
 var ClientModel = /** @class */ (function (_super) {
     __extends(ClientModel, _super);
     function ClientModel() {
