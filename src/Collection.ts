@@ -9,11 +9,16 @@ export default class Collection {
         return Aparector.instance
             .get(`${this.type}${_.isUndefined(options) ? "" : "?" + queryString.stringify(options) }`)
             .then((data) => {
+                if (data && data.length) {
+                    this.items = data;
+                    return data.length;
+                }
+
                 if (data && data.pageItems) {
                     this.items = data.pageItems;
                 }
 
-                return data.totalFilteredRecords;
+                return data.totalFilteredRecords || 0;
             });
     }
 }

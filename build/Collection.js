@@ -12,10 +12,14 @@ var Collection = /** @class */ (function () {
         return Aparector_1.default.instance
             .get("" + this.type + (_.isUndefined(options) ? "" : "?" + queryString.stringify(options)))
             .then(function (data) {
+            if (data && data.length) {
+                _this.items = data;
+                return data.length;
+            }
             if (data && data.pageItems) {
                 _this.items = data.pageItems;
             }
-            return data.totalFilteredRecords;
+            return data.totalFilteredRecords || 0;
         });
     };
     return Collection;
