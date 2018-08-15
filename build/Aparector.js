@@ -46,35 +46,49 @@ var Aparector = /** @class */ (function () {
     Aparector.prototype.getUrl = function (resource) {
         return "" + this.endpoint + resource;
     };
-    Aparector.prototype.request = function (resource, method) {
+    Aparector.prototype.request = function (resource, method, body) {
         return __awaiter(this, void 0, void 0, function () {
-            var headers;
+            var headers, options;
+            var _this = this;
             return __generator(this, function (_a) {
                 headers = {
                     "Content-Type": "application/json; charset=utf-8",
+                    // TODO clarify if it is dynamic
                     "Fineract-Platform-TenantId": "default",
                 };
-                if (_.isUndefined(this.getAuthKey())) {
-                    headers.authorization = this.getAuthorizationHeader();
+                if (!_.isNull(Aparector.instance.getAuthKey())) {
+                    headers.authorization = Aparector.instance.getAuthorizationHeader();
                 }
-                return [2 /*return*/, node_fetch_1.default(this.getUrl(resource), {
-                        headers: headers,
-                        method: method,
-                    }).then(function (res) {
-                        if (res.status === 200) {
-                            return res.json();
-                        }
-                        else {
-                            throw new Error("Request failed");
-                        }
-                    })];
+                options = {
+                    headers: headers,
+                    method: method,
+                };
+                if (!_.isUndefined(body)) {
+                    options.body = JSON.stringify(body);
+                }
+                return [2 /*return*/, node_fetch_1.default(this.getUrl(resource), options).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
+                        var _a, _b, _c, _d;
+                        return __generator(this, function (_e) {
+                            switch (_e.label) {
+                                case 0:
+                                    if (!(res.status === 200)) return [3 /*break*/, 1];
+                                    return [2 /*return*/, res.json()];
+                                case 1:
+                                    _a = Error.bind;
+                                    _c = (_b = JSON).stringify;
+                                    _d = { status: res.status };
+                                    return [4 /*yield*/, res.json()];
+                                case 2: throw new (_a.apply(Error, [void 0, _c.apply(_b, [(_d.json = _e.sent(), _d)])]))();
+                            }
+                        });
+                    }); })];
             });
         });
     };
-    Aparector.prototype.post = function (resource) {
+    Aparector.prototype.post = function (resource, body) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request(resource, "post")];
+                return [2 /*return*/, this.request(resource, "post", body)];
             });
         });
     };
@@ -85,10 +99,10 @@ var Aparector = /** @class */ (function () {
             });
         });
     };
-    Aparector.prototype.put = function (resource) {
+    Aparector.prototype.put = function (resource, body) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request(resource, "put")];
+                return [2 /*return*/, this.request(resource, "put", body)];
             });
         });
     };

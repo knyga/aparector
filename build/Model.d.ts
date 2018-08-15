@@ -1,6 +1,10 @@
 export default abstract class Model {
     type: string;
+    data: any;
     requiredFields: string[];
-    validate(): boolean;
-    fill(data: any): void;
+    optionalFields: string[];
+    isValid(): boolean;
+    set(key: string, value: any): void;
+    get(key: string): any;
+    save(): Promise<any>;
 }

@@ -20,6 +20,17 @@ var ClientModel = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = "clients";
         _this.requiredFields = ["officeId"];
+        _this.optionalFields = [
+            "groupId",
+            "externalId",
+            "accountNo",
+            "staffId",
+            "mobileNo",
+            "savingsProductId",
+            "genderId",
+            "clientTypeId",
+            "clientClassificationId",
+        ];
         return _this;
         // TODO implement additional client model specific validations
     }

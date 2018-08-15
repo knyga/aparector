@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava",
+    "test": "ava ./test/isolated-unit/Model.js",
     "dev": "nodemon",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },

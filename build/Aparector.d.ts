@@ -7,9 +7,9 @@ export default abstract class Aparector {
     abstract getAuthKey(): string;
     getAuthorizationHeader(): string;
     getUrl(resource: any): string;
-    request(resource: any, method: any): Promise<any>;
-    post(resource: any): Promise<any>;
+    request(resource: any, method: any, body?: any): Promise<any>;
+    post(resource: any, body?: any): Promise<any>;
     get(resource: any): Promise<any>;
-    put(resource: any): Promise<any>;
+    put(resource: any, body?: any): Promise<any>;
     delete(resource: any): Promise<any>;
 }

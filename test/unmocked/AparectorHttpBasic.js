@@ -2,6 +2,8 @@ import test from 'ava';
 import {endpoint, username, password} from '../config';
 import AparectorHttpBasic from '../../build/AparectorHttpBasic';
 
+// TODO add linter for tests or go to typescript for writing tests
+
 test('basic authentication works with correct credentials', async t => {
   const aparector = AparectorHttpBasic.getInstance(endpoint);
   await aparector.authenticate(username, password);

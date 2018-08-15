@@ -2,22 +2,28 @@ import * as _ from "lodash";
 import Aparector from "./Aparector";
 export default abstract class Model {
     public type: string;
+    public data: any = {};
     public requiredFields: string[] = [];
-    public validate(): boolean {
+    public optionalFields: string[] = [];
+    public isValid(): boolean {
         for (const key of this.requiredFields) {
-            if (_.isUndefined(this[key])) {
+            if (_.isUndefined(this.data[key])) {
                 return false;
             }
         }
 
         return true;
     }
-    public fill(data: any): void {
-        for (let i = 0, keys = Object.keys(data); i < keys.length; i++) {
-            const key = keys[i];
-            const value = data[key];
-            this[key] = value;
-        }
+    public set(key: string, value: any): void {
+        this.data[key] = value;
+    }
+    public get(key: string): any {
+        return this.data[key];
+    }
+    // TODO add possibility to work with generic options (Restrict Returned Fields, Pretty JSON Formatting)
+    // TODO check if validation should be done before saving or if it should be parameterized
+    public save() {
+        return Aparector.instance.post(this.type, this.data);
     }
     // public push() {
     //     return fetch(`${Authentication.endpoint}authentication?username=${username}&password=${password}`, {
