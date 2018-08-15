@@ -4,11 +4,9 @@ import AparectorHttpBasic from '../../build/AparectorHttpBasic';
 import ClientModel from '../../build/models/client/ClientModel';
 
 // TODO migrate to mock server
-
-test.beforeEach(async t => {
-  const aparector = AparectorHttpBasic.getInstance(endpoint);
+const aparector = AparectorHttpBasic.getInstance(endpoint);
+test.before(async t => {
   await aparector.authenticate(username, password);
-  t.context.aparector = aparector;
 });
 
 test('can create client', async t => {

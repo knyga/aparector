@@ -10,6 +10,7 @@ export default class Model {
     public constructor(id?) {
         this.id = id;
     }
+    // TODO add data type validations, like date etc
     public checkIsValid(): boolean {
         for (const key of this.requiredFields) {
             if (_.isUndefined(this.data[key])) {

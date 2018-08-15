@@ -9,6 +9,7 @@ var Model = /** @class */ (function () {
         this.data = {};
         this.id = id;
     }
+    // TODO add data type validations, like date etc
     Model.prototype.checkIsValid = function () {
         for (var _i = 0, _a = this.requiredFields; _i < _a.length; _i++) {
             var key = _a[_i];
