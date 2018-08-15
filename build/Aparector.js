@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -48,36 +35,70 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Authentication_1 = require("./Authentication");
-var AuthenticationHttpBasic = /** @class */ (function (_super) {
-    __extends(AuthenticationHttpBasic, _super);
-    function AuthenticationHttpBasic(endpoint) {
-        var _this = _super.call(this) || this;
-        _this.authorizationType = "Basic";
-        _this.endpoint = endpoint;
-        return _this;
+var _ = require("lodash");
+var node_fetch_1 = require("node-fetch");
+var Aparector = /** @class */ (function () {
+    function Aparector() {
     }
-    AuthenticationHttpBasic.getInstance = function (endpoint) {
-        Authentication_1.default.instance = new AuthenticationHttpBasic(endpoint);
-        return Authentication_1.default.instance;
+    Aparector.prototype.getAuthorizationHeader = function () {
+        return this.authorizationType + " " + this.getAuthKey();
     };
-    AuthenticationHttpBasic.prototype.authenticate = function (username, password) {
+    Aparector.prototype.getUrl = function (resource) {
+        return "" + this.endpoint + resource;
+    };
+    Aparector.prototype.request = function (resource, method) {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
+            var headers;
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.post("authentication?username=" + username + "&password=" + password)
-                        .then(function (info) { return _this.info = info; })];
+                headers = {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Fineract-Platform-TenantId": "default",
+                };
+                if (_.isUndefined(this.getAuthKey())) {
+                    headers.authorization = this.getAuthorizationHeader();
+                }
+                return [2 /*return*/, node_fetch_1.default(this.getUrl(resource), {
+                        headers: headers,
+                        method: method,
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            throw new Error("Request failed");
+                        }
+                    })];
             });
         });
     };
-    AuthenticationHttpBasic.prototype.getAuthKey = function () {
-        if (this.info) {
-            return this.info.base64EncodedAuthenticationKey;
-        }
-        else {
-            return null;
-        }
+    Aparector.prototype.post = function (resource) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.request(resource, "post")];
+            });
+        });
     };
-    return AuthenticationHttpBasic;
-}(Authentication_1.default));
-exports.default = AuthenticationHttpBasic;
+    Aparector.prototype.get = function (resource) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.request(resource, "get")];
+            });
+        });
+    };
+    Aparector.prototype.put = function (resource) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.request(resource, "put")];
+            });
+        });
+    };
+    Aparector.prototype.delete = function (resource) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.request(resource, "delete")];
+            });
+        });
+    };
+    return Aparector;
+}());
+exports.default = Aparector;

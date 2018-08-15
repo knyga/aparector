@@ -48,20 +48,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Authentication_1 = require("./Authentication");
-var AuthenticationHttpBasic = /** @class */ (function (_super) {
-    __extends(AuthenticationHttpBasic, _super);
-    function AuthenticationHttpBasic(endpoint) {
+var Aparector_1 = require("./Aparector");
+var AparectorHttpBasic = /** @class */ (function (_super) {
+    __extends(AparectorHttpBasic, _super);
+    function AparectorHttpBasic(endpoint) {
         var _this = _super.call(this) || this;
         _this.authorizationType = "Basic";
         _this.endpoint = endpoint;
         return _this;
     }
-    AuthenticationHttpBasic.getInstance = function (endpoint) {
-        Authentication_1.default.instance = new AuthenticationHttpBasic(endpoint);
-        return Authentication_1.default.instance;
+    AparectorHttpBasic.getInstance = function (endpoint) {
+        Aparector_1.default.instance = new AparectorHttpBasic(endpoint);
+        return Aparector_1.default.instance;
     };
-    AuthenticationHttpBasic.prototype.authenticate = function (username, password) {
+    AparectorHttpBasic.prototype.authenticate = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
@@ -70,7 +70,7 @@ var AuthenticationHttpBasic = /** @class */ (function (_super) {
             });
         });
     };
-    AuthenticationHttpBasic.prototype.getAuthKey = function () {
+    AparectorHttpBasic.prototype.getAuthKey = function () {
         if (this.info) {
             return this.info.base64EncodedAuthenticationKey;
         }
@@ -78,6 +78,6 @@ var AuthenticationHttpBasic = /** @class */ (function (_super) {
             return null;
         }
     };
-    return AuthenticationHttpBasic;
-}(Authentication_1.default));
-exports.default = AuthenticationHttpBasic;
+    return AparectorHttpBasic;
+}(Aparector_1.default));
+exports.default = AparectorHttpBasic;

@@ -1,5 +1,5 @@
-export default abstract class Authentication {
-    static instance: Authentication;
+export default abstract class Aparector {
+    static instance: Aparector;
     abstract authorizationType: string;
     abstract info: any;
     abstract endpoint: string;

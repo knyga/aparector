@@ -1,6 +1,6 @@
-import Authentication from "./Authentication";
-export default class AuthenticationHttpBasic extends Authentication {
-    static getInstance(endpoint: string): any;
+import Aparector from "./Aparector";
+export default class AparectorHttpBasic extends Aparector {
+    static getInstance(endpoint: string): Aparector;
     authorizationType: string;
     info: any;
     endpoint: string;
