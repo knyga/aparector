@@ -1,6 +1,6 @@
 {
   "name": "aparector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Current module wraps Apache Fineract in ORM-like style. Authorization implemented via HTTP Basic.",
   "main": "index.js",
   "scripts": {
