@@ -5,7 +5,7 @@ Endpoints covered: clients, loans, loanproducts.
 
 How to setup
 
-`npm install aparector#master --save`
+`npm install aparector --save`
 
 How to work with
 

@@ -1,7 +1,7 @@
 {
   "name": "aparector",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Current module wraps Apache Fineract in ORM-like style. Authorization implemented via HTTP Basic.",
   "main": "index.js",
   "scripts": {
     "test": "ava",
@@ -9,7 +9,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build": "tsc"
   },
-  "keywords": [],
+  "keywords": ["Apache Fineract", "ORM"],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -24,5 +24,13 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knyga/aparector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/knyga/aparector/issues"
+  },
+  "homepage": "https://github.com/knyga/aparector#readme"
 }
